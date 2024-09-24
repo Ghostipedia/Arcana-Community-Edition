@@ -25,4 +25,5 @@ https://docs.google.com/spreadsheets/d/1QHIJOIEwG0Eulx52Wy3HhabWh6jIPVT50CWJb-q8
 https://trello.com/b/mhVnxECt/arcana-art-team
 
 ## License?
-All code in this project is under an MIT license, all artwork, documents and sound under a Creative Commons Attribution license.
+Ported Code is now under LPGLv3
+All artwork, documents and sound under a Creative Commons Attribution license as per the original project.
