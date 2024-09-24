@@ -32,7 +32,14 @@ public class ArcanaBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, Arcana.MOD_ID);
 //    public static final RegistryObject<Block> ARCANE_STONE = BLOCKS.register("arcane_stone", () -> new Block(BlockBehaviour.Properties.of().strength(2.0F, 5.0F).sound(SoundType.STONE).requiresCorrectToolForDrops()));
     public static final BlockEntry<Block> ARCANE_STONE = createBlock("arcane_stone", Arcana.id("block/arcane_stone"));
-
+    public static final BlockEntry<Block> DUNGEON_BRICKS = createBlock("dungeon_bricks", Arcana.id("block/dungeon_bricks"));
+    public static final BlockEntry<Block> CRACKED_DUNGEON_BRICKS = createBlock("cracked_dungeon_bricks", Arcana.id("block/cracked_dungeon_bricks"));
+    public static final BlockEntry<Block> MOSSY_DUNGEON_BRICKS = createBlock("mossy_dungeon_bricks", Arcana.id("block/mossy_dungeon_bricks"));
+    public static final BlockEntry<Block> HARDENED_GLASS = createGlassCasingBlock("hardened_glass", Arcana.id("block/hardened_glass"), () -> RenderType::cutoutMipped);
+    public static final BlockEntry<Block> SMOKEY_GLASS = createGlassCasingBlock("smokey_glass", Arcana.id("block/smokey_glass"), () -> RenderType::translucent);
+    public static final BlockEntry<Block> LUMINIFEROUS_GLASS = createGlassCasingBlock("luminiferous_glass", Arcana.id("block/luminiferous_glass"), () -> RenderType::translucent);
+    public static final BlockEntry<Block> AMBER_ORE = createBlock("amber_ore", Arcana.id("block/amber_ore"));
+    public static final BlockEntry<Block> SILVER_ORE = createBlock("amber_ore", Arcana.id("block/silver_ore"));
     public static final BlockEntry<SlabBlock> ARCANE_STONE_SLAB = REGISTRATE
             .block("arcane_stone_slab", SlabBlock::new)
             .initialProperties(() -> Blocks.STONE_SLAB)
