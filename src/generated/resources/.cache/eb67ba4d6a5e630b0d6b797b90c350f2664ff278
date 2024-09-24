@@ -1,0 +1,25 @@
+// 1.20.1	2024-09-24T03:45:59.6690913	Registrate Provider for arcana [Recipes, Advancements, Loot Tables, Tags (blocks), Tags (items), Tags (fluids), Tags (entity_types), Blockstates, Item models, Lang (en_us/en_ud)]
+79813fc901c3b4f71164c101f275c9bbb02f6554 assets/arcana/blockstates/arcane_stone.json
+c7a88fa2209d2cf7f461c8f4f30c80fd3f68c700 assets/arcana/blockstates/arcane_stone_slab.json
+b97f307ebef6b03b3da99586752489fbc93cf272 assets/arcana/blockstates/arcane_stone_stairs.json
+5f068887016311afecac5db763fc1cc8f830c833 assets/arcana/lang/en_ud.json
+66ca877463099636af3c197949b5c6a77010c484 assets/arcana/lang/en_us.json
+42b37514420647dc415d2486113acab63f81a630 assets/arcana/models/block/arcane_stone.json
+8e4d6cea09cef1fcd4517ea3d8703693853626e9 assets/arcana/models/block/arcane_stone_slab.json
+a2bfcfdb3a63a7eefe219499630a0100964416df assets/arcana/models/block/arcane_stone_slab_top.json
+207134a316d6ed5a14ff9e245deff37297e76697 assets/arcana/models/block/arcane_stone_stairs.json
+76f74bcef4bd01227c4b8d78014b0daa483ee6cc assets/arcana/models/block/arcane_stone_stairs_inner.json
+68adbfc0efe173a849f532be38290c4f30ceb294 assets/arcana/models/block/arcane_stone_stairs_outer.json
+35207c5af8e96e7b56369020b8fbe15123874460 assets/arcana/models/item/arcane_stone.json
+30fe3fc462a50f1e578e6c00e537322e3eb8cb4d assets/arcana/models/item/arcane_stone_slab.json
+031c5c0e263c299ce6ee35f0ab7cd46c8b546625 assets/arcana/models/item/arcane_stone_stairs.json
+f476f4397c8cd926360863845b260609acf20ac1 assets/arcana/models/item/bonk.json
+ba068076709d525957a969cd77932268eb12fcdc data/arcana/loot_tables/blocks/arcane_stone.json
+6602063cce80a533d6e63d124527b0750edd6cbc data/arcana/loot_tables/blocks/arcane_stone_slab.json
+efda176241b6e9873e2db31466b4890ed68af13e data/arcana/loot_tables/blocks/arcane_stone_stairs.json
+4f9bdf86ef56df2d6abcc811dda7e2bed52b0289 data/forge/tags/items/pistons.json
+087667341e69d2371537358cdcd7e2da20b29a3c data/minecraft/tags/blocks/mineable/pickaxe.json
+59667a9312d13133e7eda26eab4f140d08437821 data/minecraft/tags/blocks/slabs.json
+124775e9af6afc3f38e7f6cf6c303e8938bc67c3 data/minecraft/tags/blocks/stairs.json
+59667a9312d13133e7eda26eab4f140d08437821 data/minecraft/tags/items/slabs.json
+124775e9af6afc3f38e7f6cf6c303e8938bc67c3 data/minecraft/tags/items/stairs.json
