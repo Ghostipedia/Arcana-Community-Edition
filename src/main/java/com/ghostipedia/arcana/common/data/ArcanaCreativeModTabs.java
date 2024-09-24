@@ -1,50 +1,33 @@
 package com.ghostipedia.arcana.common.data;
 
-import com.ghostipedia.arcana.Arcana;
-import com.ghostipedia.arcana.api.registry.registrate.ArcanaRegistrate;
-import com.ghostipedia.arcana.items.ArcanaItems;
-import com.tterrag.registrate.util.entry.RegistryEntry;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.world.item.*;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
-import static com.ghostipedia.arcana.api.registry.ArcanaRegistration.REGISTRATE;
+import static com.ghostipedia.arcana.Arcana.MOD_ID;
+import static com.ghostipedia.arcana.items.RegisterItems.*;
+import static com.ghostipedia.arcana.blocks.RegisterBlocks.*;
 
 public class ArcanaCreativeModTabs {
-    public static RegistryEntry<CreativeModeTab> MAIN_TAB = REGISTRATE.defaultCreativeTab("main_tab",
-                    builder -> builder.displayItems(new RegistrateDisplayItemsGenerator("main_tab", REGISTRATE))
-                            .icon(() -> ArcanaItems.BONK.asStack())
-                            .title(REGISTRATE.addLang("itemGroup", Arcana.id("item"), Arcana.NAME + " Items"))
-                            .build())
-            .register();
-    public static void init() {}
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
 
-    public static class RegistrateDisplayItemsGenerator implements CreativeModeTab.DisplayItemsGenerator {
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
+            .title(Component.translatable("itemGroup.arcana")) //The language key for the title of your CreativeModeTab
+            .withTabsBefore(CreativeModeTabs.COMBAT)
+            .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
+            .displayItems((parameters, output) -> {
+                output.accept(EXAMPLE_ITEM.get());
+                output.accept(ARCANE_STONE_ITEM.get());
+            }).build());
 
-        public final String name;
-        public final ArcanaRegistrate registrate;
-
-        public RegistrateDisplayItemsGenerator(String name, ArcanaRegistrate registrate) {
-            this.name = name;
-            this.registrate = registrate;
-        }
-
-        @Override
-        public void accept(@NotNull CreativeModeTab.ItemDisplayParameters itemDisplayParameters,
-                           @NotNull CreativeModeTab.Output output) {
-            var tab = registrate.get(name, Registries.CREATIVE_MODE_TAB);
-            for (var entry : registrate.getAll(Registries.BLOCK)) {
-                Item item = entry.get().asItem();
-                if (item == Items.AIR)
-                    continue;
-                output.accept(item);
-                }
-            for (var entry : registrate.getAll(Registries.ITEM)) {
-                Item item = entry.get();
-                if (item instanceof BlockItem)
-                    continue;
-                output.accept(item);
-            }
-        }
+    public static void addCreative(BuildCreativeModeTabContentsEvent event)
+    {
+        if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {}
+    }
+    public static void init(){
     }
 }

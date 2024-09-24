@@ -1,47 +1,75 @@
 package com.ghostipedia.arcana;
 
-import com.ghostipedia.arcana.client.ClientProxy;
-import com.ghostipedia.arcana.common.CommonProxy;
-import com.ghostipedia.arcana.utils.FormattingUtils;
+import com.ghostipedia.arcana.common.data.ArcanaCreativeModTabs;
+import org.slf4j.Logger;
+
+import com.mojang.logging.LogUtils;
+
 import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.server.ServerStartingEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.RegistryObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
+import net.neoforged.neoforge.registries.DeferredBlock;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
-// The value here should match an entry in the META-INF/mods.toml file
+import static com.ghostipedia.arcana.blocks.RegisterBlocks.BLOCKS;
+import static com.ghostipedia.arcana.common.data.ArcanaCreativeModTabs.CREATIVE_MODE_TABS;
+import static com.ghostipedia.arcana.items.RegisterItems.EXAMPLE_ITEM;
+import static com.ghostipedia.arcana.items.RegisterItems.ITEMS;
+
+// The value here should match an entry in the META-INF/neoforge.mods.toml file
 @Mod(Arcana.MOD_ID)
 public class Arcana
 {
-
-    // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "arcana";
     public static final String NAME = "Arcana: Community Edition";
-    public static final Logger LOGGER = LoggerFactory.getLogger("ArcanaCommunityEdition");
-    // Create a Deferred Register to hold Blocks which will all be registered under the "examplemod" namespace
+    private static final Logger LOGGER = LogUtils.getLogger();
 
-    public Arcana()
+
+    // The constructor for the mod class is the first code that is run when your mod is loaded.
+    // FML will recognize some parameter types like IEventBus or ModContainer and pass them in automatically.
+    public Arcana(IEventBus modEventBus, ModContainer modContainer)
     {
         Arcana.init();
-        DistExecutor.unsafeRunForDist(() -> ClientProxy::new,() -> CommonProxy::new);
+        ArcanaCreativeModTabs.init();
+        modEventBus.addListener(this::commonSetup);
+        BLOCKS.register(modEventBus);
+        ITEMS.register(modEventBus);
+        CREATIVE_MODE_TABS.register(modEventBus);
+
+        // Register ourselves for server and other game events we are interested in.
+        // Note that this is necessary if and only if we want *this* class (ExampleMod) to respond directly to events.
+        // Do not add this line if there are no @SubscribeEvent-annotated functions in this class, like onServerStarting() below.
+        NeoForge.EVENT_BUS.register(this);
+
+        // Register the item to a creative tab
+        modEventBus.addListener(ArcanaCreativeModTabs::addCreative);
+
+        // Register our mod's ModConfigSpec so that FML can create and load the config file for us
+        modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
@@ -50,14 +78,17 @@ public class Arcana
         LOGGER.info("HELLO FROM COMMON SETUP");
 
         if (Config.logDirtBlock)
-            LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));
+            LOGGER.info("DIRT BLOCK >> {}", BuiltInRegistries.BLOCK.getKey(Blocks.DIRT));
 
         LOGGER.info(Config.magicNumberIntroduction + Config.magicNumber);
 
         Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
     }
-
+    public static void init(){
+        LOGGER.info("HELLO I WORK NOW");
+    }
     // Add the example block item to the building blocks tab
+
 
     // You can use SubscribeEvent and let the Event Bus discover methods to call
     @SubscribeEvent
@@ -68,7 +99,7 @@ public class Arcana
     }
 
     // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+    @EventBusSubscriber(modid = MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
     public static class ClientModEvents
     {
         @SubscribeEvent
@@ -78,11 +109,5 @@ public class Arcana
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
-    }
-    public static void init(){
-        LOGGER.info("HELLO I WORK NOW");
-    }
-    public static ResourceLocation id(String path) {
-        return new ResourceLocation(MOD_ID, FormattingUtils.toLowerCaseUnder(path));
     }
 }
