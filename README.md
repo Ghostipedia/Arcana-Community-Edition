@@ -1,7 +1,8 @@
 # Arcana Community Edition
-Continuation of Arcana for 1.20.1 Forge
+Continuation of Arcana for 1.21.1 NeoForge
 
-Arcana is a magic-themed Minecraft mod, and an unofficial successor to Thaumcraft. 
+Arcana is a magic-themed Minecraft mod, heavily inspired by thaumcraft and other magic mod.
+This project aims to cover multiple schools of applied magicks, not just Thaumaturgy in the long run.
 
 ## DISCLAIMER: THE ORIGINAL PROJECT CEASED DEVELOPMENT
 ### AND  THE FORK/COMMUNITY VERSION IS A PASSION PROJECT OF A SINGLE PERSON
