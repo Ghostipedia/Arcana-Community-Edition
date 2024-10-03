@@ -15,15 +15,23 @@ import static com.ghostipedia.arcana.blocks.RegisterBlocks.*;
 public class ArcanaCreativeModTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, MOD_ID);
 
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.arcana")) //The language key for the title of your CreativeModeTab
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_BLOCKS = CREATIVE_MODE_TABS.register("arcana_blocks", () -> CreativeModeTab.builder()
+            .title(Component.translatable("blocksGroup.arcana")) //The language key for the title of your CreativeModeTab
             .withTabsBefore(CreativeModeTabs.COMBAT)
-            .icon(() -> EXAMPLE_ITEM.get().getDefaultInstance())
+            .icon(() -> ARCANE_STONE.asItem().getDefaultInstance())
+            .displayItems((parameters, output) -> {
+                output.accept(EXAMPLE_ITEM.get());
+                output.accept(ARCANE_STONE_ITEM.get());
+                output.accept(CRUCIBLE.get());
+            }).build());
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ASPECTS = CREATIVE_MODE_TABS.register("arcana_aspects", () -> CreativeModeTab.builder()
+            .title(Component.translatable("aspectGroup.arcana")) //The language key for the title of your CreativeModeTab
+            .withTabsBefore(CreativeModeTabs.COMBAT)
+            .icon(() -> ARCANE_STONE.asItem().getDefaultInstance())
             .displayItems((parameters, output) -> {
                 output.accept(EXAMPLE_ITEM.get());
                 output.accept(ARCANE_STONE_ITEM.get());
             }).build());
-
     public static void addCreative(BuildCreativeModeTabContentsEvent event)
     {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {}

@@ -1,6 +1,7 @@
 package com.ghostipedia.arcana;
 
 import com.ghostipedia.arcana.common.data.ArcanaCreativeModTabs;
+import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -109,5 +110,8 @@ public class Arcana
             LOGGER.info("HELLO FROM CLIENT SETUP");
             LOGGER.info("MINECRAFT NAME >> {}", Minecraft.getInstance().getUser().getName());
         }
+    }
+    public static ResourceLocation prefix(String string){
+        return ResourceLocation.fromNamespaceAndPath(MOD_ID,string);
     }
 }
